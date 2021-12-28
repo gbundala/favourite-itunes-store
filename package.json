@@ -1,0 +1,17 @@
+{
+  "name": "favourite-itunes-store",
+  "version": "1.0.0",
+  "description": "Project to fulfill L2T21 Capstone Project requirements",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Gabriel Bundala",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.17.2",
+    "helmet": "4.6.0",
+    "nodemon": "2.0.15"
+  }
+}
