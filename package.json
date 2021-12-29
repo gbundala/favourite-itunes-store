@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "4.17.2",
     "helmet": "4.6.0",
+    "node-fetch": "2.0.0",
     "nodemon": "2.0.15"
   }
 }
