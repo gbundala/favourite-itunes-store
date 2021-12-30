@@ -28,7 +28,12 @@ import "./ItunesItem.css";
  * ternary operator has been useful here!
  */
 
-export default function ItunesItem({ itunesItem }) {
+export default function ItunesItem({
+  itunesItem,
+  isFromStore,
+  handleAddToFavouriteItunes,
+  handleRemoveFavouriteItem,
+}) {
   // Object destructuring of the project item
   // We destructure the properties of the object
   // to be used in the below
@@ -43,6 +48,7 @@ export default function ItunesItem({ itunesItem }) {
   } = itunesItem;
 
   // State variables
+  const [isAddedToFavourites, setIsAddedToFavourites] = useState(false);
 
   // We use a single event handler using the [ and ] braces in
   // line with the guidance in the new React Docs
@@ -51,6 +57,7 @@ export default function ItunesItem({ itunesItem }) {
   if (!itunesItem)
     return <p>Search the iTunes and Apple Books Store to see the items</p>;
 
+  // TODO: See where to put the link to the actual item in itunes (refer to the props from the json objects)
   return (
     <div>
       <link
@@ -70,9 +77,29 @@ export default function ItunesItem({ itunesItem }) {
           </Card.Subtitle>
           <Card.Text>{collectionArtistName}</Card.Text>
           <div className="buttons-wrapper">
-            <Button className="edit-button" variant="light">
-              Add to favourites
-            </Button>
+            {isFromStore ? (
+              <Button
+                className="edit-button"
+                variant="light"
+                onClick={() => {
+                  handleAddToFavouriteItunes(itunesItem);
+                  setIsAddedToFavourites(true);
+                }}
+                disabled={isAddedToFavourites}
+              >
+                {!isAddedToFavourites ? "Add to favourites" : "Already Added!"}
+              </Button>
+            ) : (
+              <Button
+                className="delete-button"
+                variant="light"
+                onClick={() => {
+                  handleRemoveFavouriteItem(itunesItem.id);
+                }}
+              >
+                Remove
+              </Button>
+            )}
           </div>
         </Card.Body>
       </Card>

@@ -3,13 +3,18 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <div className="header-wrapper">
       <Navbar bg="light" expand="lg" sticky="top">
         <Container fluid>
-          <Navbar.Brand href="#">iTunesSearcher</Navbar.Brand>
+          <Navbar.Brand>
+            <Link className="nav-item" to="/">
+              iTunesSearcher
+            </Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -17,8 +22,17 @@ export default function Header() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link href="#action1">Home</Nav.Link>
-              <Nav.Link href="#action2">Favourites</Nav.Link>
+              <Nav.Item>
+                <Link className="nav-item" to="/">
+                  {" "}
+                  Home
+                </Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Link className="nav-item" to="/favourites">
+                  Favourites
+                </Link>
+              </Nav.Item>
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -25,7 +25,7 @@ import "./ItunesStore.css";
  * to pass data from the React app to the Express server
  */
 
-export default function ItunesStore() {
+export default function ItunesStore({ favouriteItunes, setFavouriteItunes }) {
   const [itunesItems, setiTunesItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -49,14 +49,21 @@ export default function ItunesStore() {
       );
   }
 
+  function handleAddToFavouriteItunes(itunesItemAdded) {
+    console.log("handled", itunesItemAdded);
+    setFavouriteItunes([...favouriteItunes, itunesItemAdded]);
+  }
+
+  // We create a function to generate unique number IDs
+  // Below is a reference to MDN on random number generation
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+  function createNewID() {
+    const newID = Math.floor(Math.random() * Date.now());
+    return newID;
+  }
+
   return (
     <div className="main-wrapper">
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-        crossOrigin="anonymous"
-      />
       <h1>iTunes Store Items</h1>
 
       <SearchCriteria
@@ -71,13 +78,19 @@ export default function ItunesStore() {
       <div className="project-items-wrapper">
         {itunesItems &&
           itunesItems.map((itunesItem) => {
-            //Destructing the keys from the object
-            const { wrapperType } = itunesItem;
+            // TODO:  put this id into every object (itunesItem) before displaying it so that it can go with the object when added to the favourites array. Also rectify all areas that used the unique id patter above
+            //FIXME: Fix the bug where the this ID is recreated on each and re-render and this is a problem because whenever the item is added to favourites in the top level App component it causes a render cycle wave that affect all the children including this hence recreating these children elements
+            const id = createNewID();
+            const itunesItemWithId = { ...itunesItem, id };
 
-            const uniqueId = wrapperType + "Id";
-
+            console.log(id);
             return (
-              <ItunesItem key={itunesItem[uniqueId]} itunesItem={itunesItem} />
+              <ItunesItem
+                key={id}
+                itunesItem={itunesItemWithId}
+                handleAddToFavouriteItunes={handleAddToFavouriteItunes}
+                isFromStore
+              />
             );
           })}
       </div>
