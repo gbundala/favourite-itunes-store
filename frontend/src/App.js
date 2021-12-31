@@ -7,6 +7,7 @@ import ItunesStore from "./components/ItunesStore/ItunesStore";
 
 function App() {
   const [favouriteItunes, setFavouriteItunes] = useState([]);
+  const [itunesItems, setITunesItems] = useState([]);
 
   return (
     <div className="App">
@@ -23,6 +24,8 @@ function App() {
           path="/"
           element={
             <ItunesStore
+              itunesItems={itunesItems}
+              setITunesItems={setITunesItems}
               setFavouriteItunes={setFavouriteItunes}
               favouriteItunes={favouriteItunes}
             />

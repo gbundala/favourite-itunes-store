@@ -25,19 +25,23 @@ import "./ItunesStore.css";
  * to pass data from the React app to the Express server
  */
 
-export default function ItunesStore({ favouriteItunes, setFavouriteItunes }) {
-  const [itunesItems, setiTunesItems] = useState([]);
+export default function ItunesStore({
+  favouriteItunes,
+  setFavouriteItunes,
+  itunesItems,
+  setITunesItems,
+}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  function handleSearchiTunes(searchCriteria) {
+  function handleSearchItunes(searchCriteria) {
     const { searchTerm, mediaType } = searchCriteria;
 
     fetch(`/api/?term=${searchTerm}&media=${mediaType}`)
       .then((res) => res.json())
       .then(
         (data) => {
-          setiTunesItems(data.itunesItemsArrayWithIds);
+          setITunesItems(data.itunesItemsArrayWithIds);
           setLoading(false);
           setError(null);
         },
@@ -52,7 +56,18 @@ export default function ItunesStore({ favouriteItunes, setFavouriteItunes }) {
   function handleAddToFavouriteItunes(itunesItemAdded) {
     // FIXME: Delete consolelog
     console.log("handled", itunesItemAdded);
-    setFavouriteItunes([...favouriteItunes, itunesItemAdded]);
+    const isItemAlreadyAdded = favouriteItunes.find((item) => {
+      return item.uniqueId === itunesItemAdded.uniqueId;
+    });
+
+    if (!isItemAlreadyAdded) {
+      // FIXME: Delete consolelog
+      // TODO: Also find a way so that the ItunesItem component does not clear its state when returning back to the home page
+      console.log("added?", isItemAlreadyAdded);
+      setFavouriteItunes([...favouriteItunes, itunesItemAdded]);
+    } else {
+      alert("The item is already in favourites");
+    }
   }
 
   return (
@@ -61,7 +76,7 @@ export default function ItunesStore({ favouriteItunes, setFavouriteItunes }) {
 
       <SearchCriteria
         setLoading={setLoading}
-        handleSearchiTunes={handleSearchiTunes}
+        handleSearchItunes={handleSearchItunes}
       />
 
       {loading && <p>Loading...</p>}

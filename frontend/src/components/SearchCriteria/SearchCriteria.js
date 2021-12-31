@@ -17,7 +17,7 @@ import "./SearchCriteria.css";
  * component to invoke the event of fetching for the items from iTunes
  */
 
-export default function SearchCriteria({ setLoading, handleSearchiTunes }) {
+export default function SearchCriteria({ setLoading, handleSearchItunes }) {
   const [searchCriteria, setSearchCriteria] = useState({
     searchTerm: "",
     mediaType: "",
@@ -56,7 +56,7 @@ export default function SearchCriteria({ setLoading, handleSearchiTunes }) {
           onClick={() => {
             setLoading(true);
             setSearchCriteria({ searchTerm: "", mediaType: "" });
-            handleSearchiTunes(searchCriteria);
+            handleSearchItunes(searchCriteria);
           }}
         >
           Search iTunes
