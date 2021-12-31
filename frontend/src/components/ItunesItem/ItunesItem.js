@@ -94,7 +94,7 @@ export default function ItunesItem({
                 className="delete-button"
                 variant="light"
                 onClick={() => {
-                  handleRemoveFavouriteItem(itunesItem.id);
+                  handleRemoveFavouriteItem(itunesItem.uniqueId);
                 }}
               >
                 Remove

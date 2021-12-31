@@ -37,7 +37,7 @@ export default function ItunesStore({ favouriteItunes, setFavouriteItunes }) {
       .then((res) => res.json())
       .then(
         (data) => {
-          setiTunesItems(data.itunesItemsArray);
+          setiTunesItems(data.itunesItemsArrayWithIds);
           setLoading(false);
           setError(null);
         },
@@ -50,16 +50,9 @@ export default function ItunesStore({ favouriteItunes, setFavouriteItunes }) {
   }
 
   function handleAddToFavouriteItunes(itunesItemAdded) {
+    // FIXME: Delete consolelog
     console.log("handled", itunesItemAdded);
     setFavouriteItunes([...favouriteItunes, itunesItemAdded]);
-  }
-
-  // We create a function to generate unique number IDs
-  // Below is a reference to MDN on random number generation
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-  function createNewID() {
-    const newID = Math.floor(Math.random() * Date.now());
-    return newID;
   }
 
   return (
@@ -78,16 +71,10 @@ export default function ItunesStore({ favouriteItunes, setFavouriteItunes }) {
       <div className="project-items-wrapper">
         {itunesItems &&
           itunesItems.map((itunesItem) => {
-            // TODO:  put this id into every object (itunesItem) before displaying it so that it can go with the object when added to the favourites array. Also rectify all areas that used the unique id patter above
-            //FIXME: Fix the bug where the this ID is recreated on each and re-render and this is a problem because whenever the item is added to favourites in the top level App component it causes a render cycle wave that affect all the children including this hence recreating these children elements
-            const id = createNewID();
-            const itunesItemWithId = { ...itunesItem, id };
-
-            console.log(id);
             return (
               <ItunesItem
-                key={id}
-                itunesItem={itunesItemWithId}
+                key={itunesItem.uniqueId}
+                itunesItem={itunesItem}
                 handleAddToFavouriteItunes={handleAddToFavouriteItunes}
                 isFromStore
               />
@@ -97,20 +84,3 @@ export default function ItunesStore({ favouriteItunes, setFavouriteItunes }) {
     </div>
   );
 }
-
-/* <WebProjectItem
-                key={webProjectItem.id}
-                projectItem={webProjectItem}
-                handleEditItem={handleEditItem}
-                handleDeleteItem={handleDeleteItem}
-              />
-           <ItunesItem
-                key={itunesItem[uniqueId]}
-                collectionName={collectionName}
-                collectionArtistName={collectionArtistName}
-                trackName={trackName}
-                artistName={artistName}
-                artworkUrl100={artworkUrl100}
-              />   
-              
-              */

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Gabriel Bundala",
   "license": "ISC",
@@ -14,5 +15,9 @@
     "helmet": "4.6.0",
     "node-fetch": "2.0.0",
     "nodemon": "2.0.15"
+  },
+  "engines": {
+    "node": "16.13.1",
+    "npm": "8.3.0"
   }
 }

@@ -2,15 +2,15 @@ import React from "react";
 import ItunesItem from "../ItunesItem/ItunesItem";
 
 export default function Favourites({ favouriteItunes, setFavouriteItunes }) {
-  // FIXME: REVIEW AND DELETE THIS CODE
-  //   const [itunesFavouriteItems, setItunesFavouriteItems] = useState();
-
+  // Handler to remove and item from favourites
+  // we call the filter method on the array of favourites
+  // and return elements that are not equal to the
+  // id of the item that has been selected
   function handleRemoveFavouriteItem(uniqueItunesItemId) {
     setFavouriteItunes(
-      favouriteItunes.filter((favouriteItem) => {
-        //   do stuff here before return
-        return favouriteItem.id !== uniqueItunesItemId;
-      })
+      favouriteItunes.filter(
+        (favouriteItem) => favouriteItem.uniqueId !== uniqueItunesItemId
+      )
     );
   }
 
@@ -21,7 +21,7 @@ export default function Favourites({ favouriteItunes, setFavouriteItunes }) {
         favouriteItunes.map((itunesItem) => {
           return (
             <ItunesItem
-              key={itunesItem.id}
+              key={itunesItem.uniqueId}
               itunesItem={itunesItem}
               handleRemoveFavouriteItem={handleRemoveFavouriteItem}
             />
