@@ -23,10 +23,18 @@ const app = express();
 // Calling helmet middleware which helps secure the App
 // by setting various HTTP headers
 
-// HACK: Included teh unsafe-inline directive as part of the CSP policy to rectify the error as per the message below.
+// HACK1: Included the unsafe-inline directive as part of the CSP policy to rectify the error as per the message below.
 // The useDefaults is set to 'true' hence all the defaults
 // remain the same except for directives option which
 // only overrides the "script-src" option
+// HACK2: Disabled the img-src and default-src options
+// in the directives in order to solve the bug with the error
+// message below (Images) relating to images comming from a
+// third part API (iTunes API). The default-src is disabled
+// because when the img-src is set to null, it falls back to
+// the default-src setting of 'self' hence the bug/error persists
+// therefore to solve the issue entirely needs to disable both.
+// Other settings are kept at default
 
 /**
  * ERROR MESSAGE:
