@@ -54,7 +54,7 @@ app.use(
     useDefaults: true,
     directives: {
       "script-src": ["'self'", "'unsafe-inline'"],
-      "img-src": ["'self'", "data:https"],
+      "img-src": "data:https",
     },
   })
 );
