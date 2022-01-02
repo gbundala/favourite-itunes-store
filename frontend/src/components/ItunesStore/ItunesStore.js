@@ -5,24 +5,34 @@ import "./ItunesStore.css";
 
 /**
  *
- * The WebProjects component is the main component which
- * handles all the major business logic of this application
- * of making the GET, POST, PUT and DELETE calls to the
- * endpoints exposed by the Express application using the fetch
- * method.
+ * This component ItunesStore is the main component which
+ * handles all the major business logic of this application.
+ *
+ * The main action is the GET Request call to the
+ * endpoint exposed by the Express application using the fetch
+ * method upon user clicking the Search iTunes button in the
+ * SearchCriteria child component.
  *
  * The presentational bits of this app have been delegated over
  * to the respective children of this component allowing
  * this component to focus on the logic and data fetching
  * tasks. All event handlers are defined here as well as the
- * main state variables that are relevant to the most part
- * of the application.
+ * data fetching status state variables that are relevant to
+ * the most part of the application.
  *
- * The useEffect has been used to make the GET request upon
- * mounting of the component on the DOM. Whereas the event
- * handlers has been used to make the POST, PUT and DELETE
- * request. The PUT and POST method includes headers and body
- * to pass data from the React app to the Express server
+ * The main data state, favouriteItunes & itunesItems have been
+ *  lifted to the parent component <App />.
+ *
+ * This is key in order to not loose the state upon navigating
+ * between Home and Favourites. The states data will only be lost
+ * upon user unmounts from the entire web page (inline
+ * with the Task Requirements) by closing the tab.
+ *
+ * No useEffect has been used to make the GET request upon
+ * mounting of the component on the DOM as we only want to call
+ * the data from iTunes API upon user entering the search
+ * criteria.
+ *
  */
 
 export default function ItunesStore({
@@ -84,7 +94,7 @@ export default function ItunesStore({
       {error && <p>Something is wrong!</p>}
 
       <div className="project-items-wrapper">
-        {itunesItems &&
+        {itunesItems.length ? (
           itunesItems.map((itunesItem) => {
             return (
               <ItunesItem
@@ -94,7 +104,13 @@ export default function ItunesStore({
                 isFromStore
               />
             );
-          })}
+          })
+        ) : (
+          <p>
+            Please enter your search criteria above to get data from iTunes or
+            navigate to the Favourites page
+          </p>
+        )}
       </div>
     </div>
   );
