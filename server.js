@@ -36,6 +36,11 @@ const app = express();
  * ('sha256-1kri9uKG6Gd9VbixGzyFE/kaQIHihYFdxFKKhgz3b80='), or a
  * nonce ('nonce-...') is required to enable inline execution.
  *
+ * ERR Message (Images):
+ * Refused to load the image '<URL>' because it
+ * violates the following Content Security Policy
+ * directive: "img-src 'self' data:".
+ *
  *
  * SOURCES:
  * https://help.fullstory.com/hc/en-us/articles/360020622854-Can-I-use-Content-Security-Policy-CSP-with-FullStory-
@@ -49,6 +54,7 @@ app.use(
     useDefaults: true,
     directives: {
       "script-src": ["'self'", "'unsafe-inline'"],
+      "img-src": ["'self'", "data:image/svg+xml"],
     },
   })
 );
