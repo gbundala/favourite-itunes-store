@@ -55,6 +55,7 @@ app.use(
     directives: {
       "script-src": ["'self'", "'unsafe-inline'"],
       "img-src": null,
+      "default-src": helmet.contentSecurityPolicy.dangerouslyDisableDefaultSrc,
     },
   })
 );
