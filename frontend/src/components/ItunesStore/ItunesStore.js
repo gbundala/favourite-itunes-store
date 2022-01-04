@@ -41,12 +41,15 @@ export default function ItunesStore({
   itunesItems,
   setITunesItems,
 }) {
+  // Fetching status state variables
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Handling of search
   function handleSearchItunes(searchCriteria) {
     const { searchTerm, mediaType } = searchCriteria;
 
+    // Fetching call to our server
     fetch(`/api/?term=${searchTerm}&media=${mediaType}`)
       .then((res) => res.json())
       .then(
@@ -63,6 +66,7 @@ export default function ItunesStore({
       );
   }
 
+  // Handling of adding to favourites
   function handleAddToFavouriteItunes(itunesItemAdded) {
     // FIXME: Delete consolelog
     console.log("handled", itunesItemAdded);
@@ -92,6 +96,8 @@ export default function ItunesStore({
       {loading && <p>Loading...</p>}
 
       {error && <p>Something is wrong!</p>}
+
+      {console.log(itunesItems)}
 
       <div className="project-items-wrapper">
         {itunesItems.length ? (

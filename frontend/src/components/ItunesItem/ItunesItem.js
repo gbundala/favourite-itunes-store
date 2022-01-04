@@ -4,8 +4,8 @@ import Button from "react-bootstrap/Button";
 import "./ItunesItem.css";
 
 /**
- *
- * The WebProjectItem component is mostly a presentational
+ *FIXME: UPDATE THE PARAGRAPHS 2 and 3
+ * The ItunesItem component is mostly a presentational
  * component to display the individual project Item objects
  *
  * For efficiency we have included the functionality to allow
@@ -20,12 +20,7 @@ import "./ItunesItem.css";
  * input control handled by React. These states are local and
  * ephemeral and hence best handled here in the child
  *
- * An interesting pattern implemented below is the dynamic
- * display of the value of the properties or the Form Control
- * depending on whether the user has toggled the edit mode on
- * or off. This is deemed the efficient and clean pattern rather
- * than having multiple return statements. The JavaScript
- * ternary operator has been useful here!
+ *
  */
 
 export default function ItunesItem({
