@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component renders inline with snapshot 1`] = `
+<div
+  className="main-wrapper"
+>
+  <h1>
+    iTunes Store Items
+  </h1>
+  <div
+    className="add-item-wrapper"
+  >
+    <h4
+      className="add-item-title"
+    >
+      Search iTunes and Apple Books Store
+    </h4>
+    <div
+      className="mb-3 input-group"
+    >
+      <input
+        className="form-control"
+        name="searchTerm"
+        onChange={[Function]}
+        placeholder="Enter Search Term"
+        value=""
+      />
+      <input
+        className="form-control"
+        name="mediaType"
+        onChange={[Function]}
+        placeholder="Enter Media Type"
+        value=""
+      />
+      <button
+        className="btn btn-outline-secondary"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Search iTunes
+      </button>
+    </div>
+  </div>
+  <div
+    className="project-items-wrapper"
+  >
+    <p
+      className="empty-array-note"
+    >
+      Please enter your search criteria above to get data from iTunes or navigate to the Favourites page
+    </p>
+  </div>
+</div>
+`;

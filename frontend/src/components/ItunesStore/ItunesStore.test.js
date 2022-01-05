@@ -1,7 +1,13 @@
+// Import libraries and frameworks
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
+import testRenderer from "react-test-renderer";
+
+// Import Component to be tested
 import ItunesStore from "./ItunesStore";
+
+// FIXME: Check at the relevance of setupTest.js file
 
 let targetContainerEl = null;
 
@@ -78,13 +84,30 @@ test("Component Successfully fetches data and correctly renders", async () => {
   );
 
   await act(async () => {
-    render(<ItunesStore />, targetContainerEl);
+    render(<ItunesStore itunesItems={fakeItunesData} />, targetContainerEl);
   });
 
-  // Assertions
+  //   Assertions
 
   // Card title assertion
   expect(
-    targetContainerEl.getElementByClassName("card-title h5")[0].textContent
+    targetContainerEl.getElementsByClassName("card-title h5")[0].textContent
   ).toBe("The Gifted");
+
+  //   Card sub-title assertion
+  expect(
+    targetContainerEl.getElementsByClassName(
+      "mb-2 text-muted card-subtitle h6"
+    )[0].textContent
+  ).toBe("Wale");
+
+  //   Removing the mock to isolate the test from
+  //   other tests
+  global.fetch.mockRestore();
+});
+
+test("component renders inline with snapshot", () => {
+  const tree = testRenderer.create(<ItunesStore />).toJSON();
+
+  expect(tree).toMatchSnapshot();
 });

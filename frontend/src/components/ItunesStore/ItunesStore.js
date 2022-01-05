@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchCriteria from "../SearchCriteria/SearchCriteria";
 import ItunesItem from "../ItunesItem/ItunesItem";
 import "./ItunesStore.css";
@@ -93,14 +93,22 @@ export default function ItunesStore({
         handleSearchItunes={handleSearchItunes}
       />
 
+      {
+        // FIXME: This code does not work; it has to do with the fact an empty array is a truthy, the triple === does not work too
+        itunesItems == 0 && (
+          <p className="empty-array-note">
+            Please enter your search criteria above to get data from iTunes or
+            navigate to the Favourites page
+          </p>
+        )
+      }
+
       {loading && <p>Loading...</p>}
 
       {error && <p>Something is wrong!</p>}
 
-      {console.log(itunesItems)}
-
       <div className="project-items-wrapper">
-        {itunesItems.length ? (
+        {itunesItems &&
           itunesItems.map((itunesItem) => {
             return (
               <ItunesItem
@@ -110,13 +118,7 @@ export default function ItunesStore({
                 isFromStore
               />
             );
-          })
-        ) : (
-          <p>
-            Please enter your search criteria above to get data from iTunes or
-            navigate to the Favourites page
-          </p>
-        )}
+          })}
       </div>
     </div>
   );

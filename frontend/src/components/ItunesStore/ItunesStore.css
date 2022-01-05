@@ -7,3 +7,7 @@
   flex-wrap: wrap;
   gap: 16px;
 }
+
+.empty-array-note {
+  color: rgb(180, 173, 173);
+}
