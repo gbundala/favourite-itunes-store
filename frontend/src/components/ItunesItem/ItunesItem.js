@@ -74,6 +74,7 @@ export default function ItunesItem({
           <div className="buttons-wrapper">
             {isFromStore ? (
               <Button
+                id="favourite-button"
                 className="edit-button"
                 variant="light"
                 onClick={() => {
@@ -81,6 +82,7 @@ export default function ItunesItem({
                   setIsAddedToFavourites(true);
                 }}
                 disabled={isAddedToFavourites}
+                data-testid="eventTrigger"
               >
                 {!isAddedToFavourites ? "Add to favourites" : "Already Added!"}
               </Button>
