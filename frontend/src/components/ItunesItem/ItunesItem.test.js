@@ -2,12 +2,46 @@
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import ItunesItem from "./ItunesItem";
+import pretty from "pretty";
 
 // Import component to be tested
+import ItunesItem from "./ItunesItem";
 
+/**
+ *
+ * UNIT TESTING:
+ *
+ * This component ItunesItem is more concerned with triggering
+ * some events that have been passed as props from the parent
+ * component to render the itunes items or the favourite items
+ * depending on the state of the application such as the
+ * handleAddToFavouriteItunes and handleRemoveFavouriteItem
+ *
+ * Otherwise the component is more of a presentational component
+ * to render the items as the handlers have been defined in the
+ * parent and only passed as props here, while this component
+ * maintains its internal state is only to determine whether
+ * the item is added to favourites or not which is tested
+ * below in the unit tests
+ *
+ * The presentational bit of tested through snapshot testing
+ * below all the unit tests in this file
+ *
+ * RESEARCH: The React Docs provides sufficient guidance for
+ * testing events:
+ * https://reactjs.org/docs/testing-recipes.html#events
+ *
+ * Guidance on snapshots:
+ * https://reactjs.org/docs/testing-recipes.html#snapshot-testing
+ *
+ *
+ */
+
+// Initialize the target element to render our components
+// temporarily while testing
 let targetContainerEl = null;
 
+// Mock some fake data and store in the variable fakeData
 const fakeData = {
   wrapperType: "track",
   kind: "song",
@@ -69,36 +103,24 @@ afterEach(() => {
   targetContainerEl = null;
 });
 
-// TODO: REVISIT THIS LEARNING POINT
-// console.log("before", targetContainerEl);
-
 // UNIT Testing
-test("value changes when click event is fired", () => {
-  // Call the jest function for event handler
-  const handleChange = jest.fn();
-
-  //   TODO: revisit here
+test("value changes when addToFavourites click event is fired", () => {
+  //   Mock the addToFavourites event handler function using jest
   const handleAddToFavouriteItunes = jest.fn();
 
   //   Action of rendering the component on the jestdom
   act(() => {
     render(
       <ItunesItem
-        onChange={handleChange}
         itunesItem={fakeData}
         isFromStore={true}
         handleAddToFavouriteItunes={handleAddToFavouriteItunes}
       />,
       targetContainerEl
     );
-
-    // FIXME: console.log("container", targetContainerEl.textContent);
   });
 
-  //   TODO: Find a way to get the button from here instead of the document object (seems like the dom is not reachable )
-  // FIXME:  console.log("container outside", targetContainerEl.innerHTML);
   // Grab the button element and trigger click events
-
   //   assertions upon initial rendering
   const buttonEl = document.getElementsByClassName("edit-button")[0];
   expect(buttonEl.innerHTML).toBe("Add to favourites");
@@ -109,31 +131,127 @@ test("value changes when click event is fired", () => {
   });
 
   // assertions after event
-  //   expect(handleChange).toHaveBeenCalled(1);
+
+  expect(buttonEl.innerHTML).toBe("Already Added!");
+  expect(handleAddToFavouriteItunes).toHaveBeenCalledTimes(1);
+
+  //   LOOP: EVENT CALLED SEVERAL TIMES
+  //   Acting of firing event a number of times (even)
+  act(() => {
+    for (let i = 0; i < 7; i++) {
+      buttonEl.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    }
+  });
+
+  //   Asserting on the values after being called even number of
+  // times
+
+  //   Here we expect the number of times the event handler is
+  // called to only be Once (1) since we have made the functionality
+  // to change the state of the button to be disabled immediately
+  // after the initial event firing and also to change the innerHTML
+  // to be "Already Added!". Hence the rest of the clicks are not
+  // being registered on the component/button element.
+  expect(handleAddToFavouriteItunes).toHaveBeenCalledTimes(1);
   expect(buttonEl.innerHTML).toBe("Already Added!");
 
-  //   FIXME: You need to pull in modules that are not in this component we are testing. Can we mock the imported functions -- such as in this case the handleAddToFavour... is undefined
+  //   Acting of firing event a number of times (odd)
+  act(() => {
+    for (let i = 0; i < 6; i++) {
+      buttonEl.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    }
+  });
+
+  //   Asserting on the values after being called odd number of
+  // times
+
+  //   The same result is expected when we fire the click event
+  // a set number of odd times as per the explanation above
+  expect(handleAddToFavouriteItunes).toHaveBeenCalledTimes(1);
+  expect(buttonEl.innerHTML).toBe("Already Added!");
 });
 
-{
-  /* <div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<div class="container py-5 h-100 card-style card">
-<img class="card-img-top" src="https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/db/d5/86/dbd586f6-5c4b-e9f3-8ec6-4716adf881c8/source/100x100bb.jpg">
-<div class="card-body">
-<div class="card-title h5">Marry You (feat. Ne-Yo) - Single</div>
-<div class="mb-2 text-muted card-subtitle h6">
-Diamond Platnumz
-</div>
-<p class="card-text">
+// TESTING REMOVE FROM FAVOURITES EVENT
 
-</p>
-<div class="buttons-wrapper">
-<button type="button" class="delete-button btn btn-light">
-Remove
-</button>
-</div>
-</div>
-</div>
-</div> */
-}
+test("values changes when removeFromFavourites event handler is fired", () => {
+  // Mock the handleRemoveFavouriteItem event handler function using jest
+  const handleRemoveFavouriteItem = jest.fn();
+
+  // Render the component on the jestDom
+  // Rendering is a unit of interaction with the UI
+  // act() is a helper that ensures all updates relating
+  // to this unit of interaction have been updated to the DOM
+  // (basically the testing jestDom) before we make any
+  // assertions
+  act(() => {
+    render(
+      <ItunesItem
+        itunesItem={fakeData}
+        isFromStore={false}
+        handleRemoveFavouriteItem={handleRemoveFavouriteItem}
+      />,
+      targetContainerEl
+    );
+  });
+
+  // Asserting on the value upon initial rendering of the
+  // component
+  const buttonEl = document.getElementsByClassName("delete-button")[0];
+  expect(buttonEl.innerHTML).toBe("Remove");
+
+  // Dispatching the clicking event
+  act(() => {
+    buttonEl.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+
+  //   Asserting after event is fired
+  expect(handleRemoveFavouriteItem).toHaveBeenCalledTimes(1);
+
+  //   LOOP: Asserting on the values and number of times
+  //   the event handler has been called when the event is
+  // fired more than once.
+
+  // In this respect we expect the number of times to be equal
+  // to the number of clicks being made and the innerHTML remains
+  // the same
+
+  act(() => {
+    for (let i = 0; i < 6; i++) {
+      buttonEl.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    }
+  });
+
+  //   Asserting on the values after being called odd number of
+  // times
+  expect(handleRemoveFavouriteItem).toHaveBeenCalledTimes(7);
+  expect(buttonEl.innerHTML).toBe("Remove");
+});
+
+/**
+ *
+ * SNAPSHOT TESTING
+ */
+
+test("renders in accordance with snapshot", () => {
+  // Rendering component when isFromStore prop is true
+  act(() => {
+    render(
+      <ItunesItem itunesItem={fakeData} isFromStore={true} />,
+      targetContainerEl
+    );
+  });
+
+  // Asserting value inline with snapshot saved
+  expect(pretty(targetContainerEl.innerHTML)).toMatchSnapshot();
+
+  //   Rendering component when isFromStore prop is false
+  act(() => {
+    render(
+      <ItunesItem itunesItem={fakeData} isFromStore={false} />,
+      targetContainerEl
+    );
+  });
+
+  //   Asserting the value to being inline with snapshot saved
+  expect(pretty(targetContainerEl.innerHTML)).toMatchSnapshot();
+});

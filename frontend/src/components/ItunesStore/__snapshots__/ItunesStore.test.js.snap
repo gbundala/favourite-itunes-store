@@ -128,7 +128,6 @@ exports[`ItunesStore component renders inline with snapshot with data 1`] = `
           >
             <button
               className="edit-button btn btn-light"
-              data-testid="eventTrigger"
               disabled={false}
               id="favourite-button"
               onClick={[Function]}

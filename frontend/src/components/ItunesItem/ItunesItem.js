@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "./ItunesItem.css";
@@ -45,9 +45,11 @@ export default function ItunesItem({
   // State variables
   const [isAddedToFavourites, setIsAddedToFavourites] = useState(false);
 
-  // We use a single event handler using the [ and ] braces in
-  // line with the guidance in the new React Docs
-  // https://beta.reactjs.org/learn/updating-objects-in-state#copying-objects-with-the-spread-syntax
+  // FIXME: fix this it is not working
+  const handleClick = useCallback(() => {
+    handleAddToFavouriteItunes(itunesItem);
+    setIsAddedToFavourites(true);
+  }, [itunesItem, handleAddToFavouriteItunes]);
 
   if (!itunesItem)
     return <p>Search the iTunes and Apple Books Store to see the items</p>;
@@ -77,12 +79,8 @@ export default function ItunesItem({
                 id="favourite-button"
                 className="edit-button"
                 variant="light"
-                onClick={() => {
-                  handleAddToFavouriteItunes(itunesItem);
-                  setIsAddedToFavourites(true);
-                }}
+                onClick={handleClick}
                 disabled={isAddedToFavourites}
-                data-testid="eventTrigger"
               >
                 {!isAddedToFavourites ? "Add to favourites" : "Already Added!"}
               </Button>
