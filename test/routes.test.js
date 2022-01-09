@@ -30,5 +30,30 @@ describe("iTunes API appropriately called and data is received", function () {
         }
       );
     });
+
+    // another test
+    it("The api call corretly does not respond to the React routes", function (done) {
+      request(
+        "http://localhost:3000/favourites",
+        function (error, response, body) {
+          expect(response.statusCode).to.equal(404);
+          done();
+        }
+      );
+    });
+
+    // FIXME: Check below and delete
+
+    // const server = require("../server");
+
+    // it("Testing GET", function (done) {
+    //   request(server)
+    //     .get("/")
+    //     .end((err, res) => {
+    //       res.should.have.status(200);
+    //     });
+
+    //   done();
+    // });
   });
 });

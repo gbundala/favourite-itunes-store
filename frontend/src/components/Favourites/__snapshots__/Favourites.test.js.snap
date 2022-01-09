@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Favourites component renders inline with snapshot 1`] = `
+<div>
+  <h4>
+    Favourite iTunes
+  </h4>
+</div>
+`;
