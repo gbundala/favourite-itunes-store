@@ -1,14 +1,35 @@
+// Imports
+// Import react
 import { useState } from "react";
+
+// Import react-router
 import { Route, Routes } from "react-router-dom";
+
+// Import stylesheet
 import "./App.css";
+
+// Import child components
 import Favourites from "./components/Favourites/Favourites";
 import Header from "./components/Header/Header";
 import ItunesStore from "./components/ItunesStore/ItunesStore";
 
 function App() {
+  // State variables for favouritesItunes and the fetched
+  // iTunes Items. We keep the state in the parent App
+  // component here in order to avoid the sibling
+  // components being oosing state after navigating
+  // between them. Also to ensure components are kept as
+  // pure functions.
   const [favouriteItunes, setFavouriteItunes] = useState([]);
-  const [itunesItems, setITunesItems] = useState([]);
+  const [itunesItems, setITunesItems] = useState(null);
 
+  // Inside the return we call the <link> tag at the top
+  // level with bootstrap links to ensure the entire app
+  // is served with the boostrap styles
+
+  // Then we pass the respective setter and getters
+  // from useState into the respective components
+  // to be called in there as necessary
   return (
     <div className="App">
       <link

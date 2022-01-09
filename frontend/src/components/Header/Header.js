@@ -5,6 +5,21 @@ import Container from "react-bootstrap/Container";
 import "./Header.css";
 import { Link } from "react-router-dom";
 
+/**
+ *
+ * Header component is mainly for presentational purpose
+ * to be able to present the options for the user to
+ * easily navigate mainly between the Home page where
+ * there is the Search Criteria and the Favourites page
+ *
+ * React Router library is used to enable the navigation
+ * The <Link> component from the react-router-dom API
+ * has been used here to navigate
+ *
+ * The remained components are provided by Boostrap
+ * with the good visual from the boostrap library
+ * as well as good UI
+ */
 export default function Header() {
   return (
     <div className="header-wrapper">

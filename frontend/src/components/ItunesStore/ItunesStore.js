@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
+// Import react
+import React, { useState } from "react";
+
+// Child components imports
 import SearchCriteria from "../SearchCriteria/SearchCriteria";
 import ItunesItem from "../ItunesItem/ItunesItem";
+
+// Styles import
 import "./ItunesStore.css";
 
 /**
@@ -50,6 +55,10 @@ export default function ItunesStore({
     const { searchTerm, mediaType } = searchCriteria;
 
     // Fetching call to our server
+
+    // we pass in the query values the searchTerm
+    // and mediaType to be used our Custom API when
+    // fetching from iTunes API
     fetch(`/api/?term=${searchTerm}&media=${mediaType}`)
       .then((res) => res.json())
       .then(
@@ -68,16 +77,16 @@ export default function ItunesStore({
 
   // Handling of adding to favourites
   function handleAddToFavouriteItunes(itunesItemAdded) {
-    // FIXME: Delete consolelog
-    console.log("handled", itunesItemAdded);
+    // Before adding, we check if the item is already in the
+    // favourites list using the Array.find() method
     const isItemAlreadyAdded = favouriteItunes.find((item) => {
       return item.uniqueId === itunesItemAdded.uniqueId;
     });
 
+    // We only add if the item does not exist in favourites
+    // Otherwise we alert to the user that the item has
+    // aready been added
     if (!isItemAlreadyAdded) {
-      // FIXME: Delete consolelog
-      // TODO: Also find a way so that the ItunesItem component does not clear its state when returning back to the home page
-      console.log("added?", isItemAlreadyAdded);
       setFavouriteItunes([...favouriteItunes, itunesItemAdded]);
     } else {
       alert("The item is already in favourites");
@@ -93,19 +102,16 @@ export default function ItunesStore({
         handleSearchItunes={handleSearchItunes}
       />
 
-      {
-        // FIXME: This code does not work; it has to do with the fact an empty array is a truthy, the triple === does not work too
-        itunesItems == 0 && (
-          <p className="empty-array-note">
-            Please enter your search criteria above to get data from iTunes or
-            navigate to the Favourites page
-          </p>
-        )
-      }
-
       {loading && <p>Loading...</p>}
 
       {error && <p>Something is wrong!</p>}
+
+      {!itunesItems && (
+        <p className="empty-array-note">
+          Please enter your search criteria above to get data from iTunes or
+          navigate to the Favourites page
+        </p>
+      )}
 
       <div className="project-items-wrapper">
         {itunesItems &&

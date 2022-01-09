@@ -1,5 +1,11 @@
+// Import react
 import React from "react";
+
+// Import child component
 import ItunesItem from "../ItunesItem/ItunesItem";
+
+// Import stylesheet
+import "./Favourites.css";
 
 export default function Favourites({ favouriteItunes, setFavouriteItunes }) {
   // Handler to remove and item from favourites
@@ -17,16 +23,18 @@ export default function Favourites({ favouriteItunes, setFavouriteItunes }) {
   return (
     <div>
       <h4>Favourite iTunes</h4>
-      {favouriteItunes &&
-        favouriteItunes.map((itunesItem) => {
-          return (
-            <ItunesItem
-              key={itunesItem.uniqueId}
-              itunesItem={itunesItem}
-              handleRemoveFavouriteItem={handleRemoveFavouriteItem}
-            />
-          );
-        })}
+      <div className="favourite-items-wrapper">
+        {favouriteItunes &&
+          favouriteItunes.map((itunesItem) => {
+            return (
+              <ItunesItem
+                key={itunesItem.uniqueId}
+                itunesItem={itunesItem}
+                handleRemoveFavouriteItem={handleRemoveFavouriteItem}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 }

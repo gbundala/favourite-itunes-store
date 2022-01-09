@@ -1,25 +1,40 @@
-import React, { useCallback, useState } from "react";
+// Import React
+import React, { useState } from "react";
+
+// Import Boostrap components
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+
+// Import stylesheet
 import "./ItunesItem.css";
 
 /**
- *FIXME: UPDATE THE PARAGRAPHS 2 and 3
+ *
  * The ItunesItem component is mostly a presentational
  * component to display the individual project Item objects
  *
- * For efficiency we have included the functionality to allow
- * the user to edit some properties in the object or to delete
- * the entire item. The business logic for handling the PUT
- * and DELETE requests have been handed over to the parent
- * component WebProjects.
+ * This component is used in two areas. One is in the ItunesStore
+ * to render the itunes items fetched from iTunes API. The second
+ * place is from the Favourites component to render the items
+ * saved as favourites.
  *
- * However we handle the local state of the individiual project
- * items in this component including toggling the edit mode to
- * allow the user to edit the item, also handlign the form
- * input control handled by React. These states are local and
- * ephemeral and hence best handled here in the child
+ * This enhances efficiency in the code since we re-use a
+ * component instead of duplicating the same code. In this
+ * case we have a switch in the rendering of the buttons.
+ * If the item is coming from ItunesStore it renders the
+ * "Add to favourites" button, otherwise it renders the
+ * "Remove" button.
  *
+ * The main functionality in the componet is to fire
+ * the event handlers passed down from parent, depending
+ * on where it is rendered. The handleAddToFavouritesItunes
+ * passed from the ItunesStore component and the
+ * handleRemoveFavouriteItem passed down when it is rendered
+ * by the Favourites component
+ *
+ * The presenational bit of the component is display the
+ * card information from its props as passed down from
+ * the parent component.
  *
  */
 
@@ -29,41 +44,17 @@ export default function ItunesItem({
   handleAddToFavouriteItunes,
   handleRemoveFavouriteItem,
 }) {
-  // Object destructuring of the project item
-  // We destructure the properties of the object
-  // to be used in the below
-  //Destructing the keys from the object
-  const {
-    wrapperType,
-    collectionName,
-    collectionArtistName,
-    trackName,
-    artistName,
-    artworkUrl100,
-  } = itunesItem;
+  //Destructuring the keys from the object
+  const { collectionName, collectionArtistName, artistName, artworkUrl100 } =
+    itunesItem;
 
-  // State variables
+  // State variables to determine whether the card has
+  // been added to favourites and switch values as well
+  // as disable the button
   const [isAddedToFavourites, setIsAddedToFavourites] = useState(false);
 
-  // FIXME: fix this it is not working
-  const handleClick = useCallback(() => {
-    handleAddToFavouriteItunes(itunesItem);
-    setIsAddedToFavourites(true);
-  }, [itunesItem, handleAddToFavouriteItunes]);
-
-  if (!itunesItem)
-    return <p>Search the iTunes and Apple Books Store to see the items</p>;
-
-  // TODO: See where to put the link to the actual item in itunes (refer to the props from the json objects)
   return (
     <div>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-        crossOrigin="anonymous"
-      />
-
       <Card className="container py-5 h-100 card-style">
         <Card.Img variant="top" src={artworkUrl100} />
 
@@ -79,7 +70,10 @@ export default function ItunesItem({
                 id="favourite-button"
                 className="edit-button"
                 variant="light"
-                onClick={handleClick}
+                onClick={() => {
+                  handleAddToFavouriteItunes(itunesItem);
+                  setIsAddedToFavourites(true);
+                }}
                 disabled={isAddedToFavourites}
               >
                 {!isAddedToFavourites ? "Add to favourites" : "Already Added!"}

@@ -1,7 +1,12 @@
+// Import react
 import React, { useState } from "react";
+
+// Import Boostrap components
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
+
+// Import stylesheet
 import "./SearchCriteria.css";
 
 /**
@@ -13,16 +18,19 @@ import "./SearchCriteria.css";
  *
  * Not much is happening in this component except for the setting
  * of the parent loading state as well as receiving the and
- * firing the handleSerachiTunes event handler from the parent
- * component to invoke the event of fetching for the items from iTunes
+ * firing the handleSearchiTunes event handler from the parent
+ * component to invoke the event of fetching for the items
+ * from iTunes
  */
 
 export default function SearchCriteria({ setLoading, handleSearchItunes }) {
+  // Search input states
   const [searchCriteria, setSearchCriteria] = useState({
     searchTerm: "",
     mediaType: "",
   });
 
+  // RESEARCH:
   // the deep dive section in the new react docs provide
   // incredible guidance on updating the fields in
   // a form using a single event handler
