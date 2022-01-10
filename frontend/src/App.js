@@ -21,7 +21,7 @@ function App() {
   // between them. Also to ensure components are kept as
   // pure functions.
   const [favouriteItunes, setFavouriteItunes] = useState([]);
-  const [itunesItems, setITunesItems] = useState(null);
+  const [itunesItems, setITunesItems] = useState([]);
 
   // Inside the return we call the <link> tag at the top
   // level with bootstrap links to ensure the entire app

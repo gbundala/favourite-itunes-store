@@ -2,12 +2,17 @@
   padding: 24px;
 }
 
-.project-items-wrapper {
+.itunes-items-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 }
 
+/* The empty-array-note className is applied to both this component and Favourites Component
+
+Since the classNames are accessible globaly in 
+a React application, no need to duplicate this 
+code in the Favourites directory css file*/
 .empty-array-note {
   color: rgb(180, 173, 173);
 }

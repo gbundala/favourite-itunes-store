@@ -48,7 +48,7 @@ exports[`ItunesStore component renders inline with snapshot 1`] = `
     Please enter your search criteria above to get data from iTunes or navigate to the Favourites page
   </p>
   <div
-    className="project-items-wrapper"
+    className="itunes-items-wrapper"
   />
 </div>
 `;
@@ -96,7 +96,7 @@ exports[`ItunesStore component renders inline with snapshot with data 1`] = `
     </div>
   </div>
   <div
-    className="project-items-wrapper"
+    className="itunes-items-wrapper"
   >
     <div>
       <div

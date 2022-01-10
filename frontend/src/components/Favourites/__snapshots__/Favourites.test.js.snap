@@ -5,5 +5,13 @@ exports[`Favourites component renders inline with snapshot 1`] = `
   <h4>
     Favourite iTunes
   </h4>
+  <p
+    className="empty-array-note"
+  >
+    You have not yet added any favourites. Navigate to Home page to Search for your iTunes and click the Add to favourites button to add!
+  </p>
+  <div
+    className="favourite-items-wrapper"
+  />
 </div>
 `;

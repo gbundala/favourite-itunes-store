@@ -106,14 +106,14 @@ export default function ItunesStore({
 
       {error && <p>Something is wrong!</p>}
 
-      {!itunesItems && (
+      {!itunesItems.length && (
         <p className="empty-array-note">
           Please enter your search criteria above to get data from iTunes or
           navigate to the Favourites page
         </p>
       )}
 
-      <div className="project-items-wrapper">
+      <div className="itunes-items-wrapper">
         {itunesItems &&
           itunesItems.map((itunesItem) => {
             return (
