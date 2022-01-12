@@ -7,7 +7,9 @@ const request = require("request");
 
 // Testing Routing
 describe("Custom API and iTunes API appropriately called and data is received", function () {
-  describe("Status Code and  Body Response is correct", function () {
+  describe("Status Code and Body Response is correct", function () {
+    // API call should succeed to provide a response and
+    // a 200 OK status
     it("Is the API call successful?", function (done) {
       request("http://localhost:8080/api", function (error, response, body) {
         expect(response.statusCode).to.equal(200);
@@ -17,18 +19,9 @@ describe("Custom API and iTunes API appropriately called and data is received", 
       });
     });
 
-    // RESEARCH: On testing asyc calls
-    // https://stackoverflow.com/questions/26571328/how-do-i-properly-test-promises-with-mocha-and-chai
-
-    // Also in docs
-    // https://mochajs.org/#using-async-await
-
-    // It helps to avoid the error below that occurs sometimes
-    // but also reduces significantly the test running time
-
-    // ERROR MESSAGE (when async/await is not used) that occurs sometimes
-    // Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/Users/gabrielbundala/Desktop/favourite-itunes-store/test/routes.test.js)
-
+    // When provided with query keys and values
+    // the API key should succeed and return the appropriate
+    // response from iTunes API
     it("Is the API call successful with queries?", function (done) {
       const searchTerm = "diamond+platnumz";
       const mediaType = "music";
@@ -39,10 +32,10 @@ describe("Custom API and iTunes API appropriately called and data is received", 
           // be able to convert the json response to an object
           // and be able to access the properties in the first
           // Object from the returned array
-
           const resBody = JSON.parse(body);
           const firstObjectFromRes = resBody.itunesItemsArrayWithIds[0];
 
+          // Assertions
           expect(response.statusCode).to.equal(200);
           expect(response.body).to.be.a("string");
           expect(resBody).to.be.an("object");
@@ -61,7 +54,8 @@ describe("Custom API and iTunes API appropriately called and data is received", 
     });
 
     // Testing on the failure if the /api param is not specified
-    it("Should fail when the api param is not specified after the root url", function (done) {
+    // after the root url ("/")
+    it("Should fail when the 'api' param is not specified after the root url", function (done) {
       request("http://localhost:8080/", function (error, response, body) {
         expect(response.statusCode).to.equal(500);
         done();
