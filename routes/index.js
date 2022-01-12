@@ -33,11 +33,6 @@ apiRouter.get("/", async function (req, res) {
   // grab the term and media from the url query by destructuring
   const { term, media } = req.query;
 
-  //   FIXME: DELETE
-  console.log(req.query);
-
-  //   FIXME: NOT THIS ONE BUT THE PREVIOUS TASK: SEE IF THERE IS A NEED TO CONVERT THE FETCH CALLS IN FRONDEND TO USE ASYNC AWAIT AS BELOW
-
   //   Fetch the data from the itunes API using async-await and in a
   // try-catch block
   try {
